@@ -10,7 +10,14 @@ set(CMAKE_AUTOMOC ON)
 find_package(QT NAMES Qt6 COMPONENTS Gui Qml Quick)
 find_package(Qt6 REQUIRED COMPONENTS Core Qml Quick)
 
-qt_add_executable(${CMAKE_PROJECT_NAME} src/main.cpp src/apiclient.h src/apiclient.cpp)
+qt_add_executable(${CMAKE_PROJECT_NAME}
+    src/main.cpp
+    src/apiclient.h
+    src/apiclient.cpp
+    src/locationdto.h
+    src/alertsdto.h
+    src/weatherdto.h
+)
 
 # qt_standard_project_setup() requires Qt 6.3 or higher. See https://doc.qt.io/qt-6/qt-standard-project-setup.html for details.
 if (${QT_VERSION_MINOR} GREATER_EQUAL 3)

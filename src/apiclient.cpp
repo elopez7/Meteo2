@@ -15,7 +15,7 @@ APIClient::APIClient(QObject *parent)
 
     //TO-DO
     //Connect this to a QML push button for later.
-    onGetWeather();
+    //onGetWeather();
 }
 
 void APIClient::onGetWeather()

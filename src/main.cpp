@@ -10,6 +10,10 @@
 
 #include "apiclient.h"
 
+
+#include <QDateTime>
+
+
 int main(int argc, char *argv[])
 {
     set_qt_environment();
@@ -17,6 +21,13 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
 
     APIClient apiClient;
+
+    /*
+    QString timeStamp{"1675713752"};
+    qint64 convertedStamp{timeStamp.toLongLong()};
+    QDateTime myDateTime{QDateTime::fromSecsSinceEpoch(convertedStamp)};
+    qDebug() << "Converted Timestamp" << myDateTime;
+    */
 
     QQmlApplicationEngine engine;
     const QUrl url(u"qrc:Main/main.qml"_qs);
