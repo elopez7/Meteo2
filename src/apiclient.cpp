@@ -1,8 +1,10 @@
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QJsonDocument>
+#include <QFile>
 #include <QJsonArray>
 #include <QJsonObject>
+#include <QUrlQuery>
 
 #include "apiclient.h"
 
@@ -13,15 +15,43 @@ APIClient::APIClient(QObject *parent)
     , m_dataBuffer{new QByteArray{}}
 {
 
+    buildAPIUrl();
     //TO-DO
     //Connect this to a QML push button for later.
-    //onGetWeather();
+    onGetWeather();
+}
+
+void APIClient::buildAPIUrl()
+{
+    QFile file("D:/Projects/Qt/Meteo2/secrets.json");
+    if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        qDebug() << "Failed to open file";
+        return;
+    }
+
+    QJsonDocument jsonDoc = QJsonDocument::fromJson(file.readAll());
+    QJsonObject jsonObject = jsonDoc.object();
+    QJsonObject weatherMapObject = jsonObject["OpenWeatherMap"].toObject();
+
+    qDebug() << "Json Object" << weatherMapObject["url"];
+
+    WeatherAPIUrl.setScheme("https");
+    WeatherAPIUrl.setUrl(weatherMapObject["url"].toString());
+    WeatherAPIUrl.setPath(weatherMapObject["weatherEndPoint"].toString());
+    QUrlQuery weatherQueries;
+    weatherQueries.addQueryItem(latitedeQuery, "33.44");
+    weatherQueries.addQueryItem(longitudedeQuery, "94.04");
+    weatherQueries.addQueryItem(appIDQuery, weatherMapObject["APIKey"].toString());
+    weatherQueries.addQueryItem(unitsQUery, weatherMapObject["unitQuery"].toString());
+
+    WeatherAPIUrl.setQuery(weatherQueries);
 }
 
 void APIClient::onGetWeather()
 {
-    const QUrl API_ENDPOINT{QStringLiteral("https://api.openweathermap.org/data/3.0/onecall?lat=33.44&lon=94.04&appid=e701b754480e00672928449a6c2d991a&units=metric")};
-    QNetworkRequest request{API_ENDPOINT};
+    QNetworkRequest request{WeatherAPIUrl};
+    qDebug() << WeatherAPIUrl;
     m_netReply = m_netManager->get(request);
 
     connect(m_netReply, &QIODevice::readyRead, this, &APIClient::dataReadyRead);
@@ -64,3 +94,5 @@ void APIClient::dataReadFinished()
     }
 */
 }
+
+
