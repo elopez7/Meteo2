@@ -7,4 +7,5 @@
 
 Q_IMPORT_QML_PLUGIN(contentPlugin)
 Q_IMPORT_QML_PLUGIN(Meteo2Plugin)
+Q_IMPORT_QML_PLUGIN(Quick3DAssets_PipeHousePlugin)
 

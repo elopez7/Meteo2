@@ -8,7 +8,10 @@ qt6_add_qml_module(content
     URI "content"
     VERSION 1.0
     QML_FILES
+        WeatherInformationCard.ui.qml
         Screen01.ui.qml
         App.qml
+    RESOURCES
+        images/cloud.svg
 
 )

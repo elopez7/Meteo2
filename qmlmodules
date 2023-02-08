@@ -16,5 +16,6 @@ add_subdirectory(asset_imports)
 target_link_libraries(Meteo2App PRIVATE
     contentplugin
     Meteo2plugin
+    Quick3DAssets_PipeHouseplugin
 
 )

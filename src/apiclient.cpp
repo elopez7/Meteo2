@@ -51,7 +51,7 @@ void APIClient::buildAPIUrl()
 void APIClient::onGetWeather()
 {
     QNetworkRequest request{WeatherAPIUrl};
-    qDebug() << WeatherAPIUrl;
+    //qDebug() << WeatherAPIUrl;
     m_netReply = m_netManager->get(request);
 
     connect(m_netReply, &QIODevice::readyRead, this, &APIClient::dataReadyRead);
