@@ -1,13 +1,16 @@
 #ifndef LOCATIONDTO_H
 #define LOCATIONDTO_H
 
+
 #include <QString>
+
+class QObject;
 
 struct LocationDTO
 {
     LocationDTO(const QString& locationName, const QString& countryName,
                 const QString& stateName, const double latitude,
-                const double longitude)
+                const double longitude, QObject *parent = nullptr)
         : m_locationName{locationName}
         , m_countryName{countryName}
         , m_stateName{stateName}

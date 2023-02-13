@@ -19,6 +19,9 @@ qt_add_executable(${CMAKE_PROJECT_NAME}
     src/weatherdto.h
     src/datasource.h
     src/datasource.cpp
+    src/locationmodel.h
+    src/locationmodel.cpp
+    src/enumconverters.h
 )
 
 # qt_standard_project_setup() requires Qt 6.3 or higher. See https://doc.qt.io/qt-6/qt-standard-project-setup.html for details.

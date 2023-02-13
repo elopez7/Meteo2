@@ -2,6 +2,8 @@
 #define APICLIENT_H
 
 #include <QObject>
+#include <QJsonObject>
+#include <QJsonDocument>
 #include <QUrl>
 
 class QNetworkAccessManager;
@@ -14,9 +16,11 @@ public:
     explicit APIClient(QObject *parent = nullptr);
 
 signals:
+    void onDataFetchFinished(QJsonDocument weatherObject);
 
 public slots:
-    void onGetWeather();
+    void onGetLocations(const QString& location);
+    void onGetWeather(const double latitude, const double longitude);
     void dataReadyRead();
     void dataReadFinished();
 
@@ -27,22 +31,18 @@ private:
 
     QString m_latitudeValue;
     QString m_longitudeValue;
-    QString m_APIKeyValue;
-    QString m_excludeValue;
-    QString m_unitsValue;
 
     QUrl WeatherAPIUrl;
 
-    QString baseUrl{QStringLiteral("https//api.openweathermap.org")};
-    QString weatherEndPoint{QStringLiteral("/data/3.0/onecall")};
-    QString latitedeQuery{QStringLiteral("lat")};
-    QString longitudedeQuery{QStringLiteral("lon")};
     QString appIDQuery{QStringLiteral("appid")};
     QString unitsQUery{QStringLiteral("units")};
+    QJsonObject weatherMapObject;
 
-
-    void buildAPIUrl();
-
+    void parseUserSecrets();
+    void buildLocationRequestUrl(const QString &location);
+    void buildWeatherRequestUrl(const double latitude, const double longitude);
+    QUrlQuery buildWeatherRequestQueries(const double latitude, const double longitude);
+    void sendGetRequest();
 };
 
 #endif // APICLIENT_H

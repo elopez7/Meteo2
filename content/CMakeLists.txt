@@ -9,9 +9,18 @@ qt6_add_qml_module(content
     VERSION 1.0
     QML_FILES
         WeatherInformationCard.ui.qml
+        WeatherDetailsCard.ui.qml
+        Separator.ui.qml
+        SearchField.ui.qml
         Screen01.ui.qml
+        CustomTextInput.ui.qml
+        CurrentWeatherCard.ui.qml
+        CountriesModel.qml
+        CountriesDelegate.ui.qml
+        Countries.ui.qml
         App.qml
     RESOURCES
+        images/searchIcon.svg
         images/cloud.svg
 
 )

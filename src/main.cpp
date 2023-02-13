@@ -3,12 +3,14 @@
 
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QtQml>
 
 #include "app_environment.h"
 #include "import_qml_components_plugins.h"
 #include "import_qml_plugins.h"
 
-#include "apiclient.h"
+#include "datasource.h"
+#include "locationmodel.h"
 
 
 #include <QDateTime>
@@ -20,8 +22,6 @@ int main(int argc, char *argv[])
 
     QGuiApplication app(argc, argv);
 
-    APIClient apiClient;
-
     /*
     QString timeStamp{"1675713752"};
     qint64 convertedStamp{timeStamp.toLongLong()};
@@ -30,6 +30,19 @@ int main(int argc, char *argv[])
     */
 
     QQmlApplicationEngine engine;
+
+    LocationModel locationModel;
+    DataSource* dataSource{new DataSource(&engine)};
+    locationModel.setDataSource(dataSource);
+
+    qmlRegisterSingletonType<DataSource*>("org.esteban.data", 1, 0, "DataSource", [&](QQmlEngine *, QJSEngine *) -> QObject *{
+        return dataSource;
+    });
+
+    qmlRegisterSingletonType<LocationModel>("org.esteban.Locations", 1, 0, "LocationModel", [&](QQmlEngine *, QJSEngine *) -> QObject *{
+        return &locationModel;
+    });
+
     const QUrl url(u"qrc:Main/main.qml"_qs);
     QObject::connect(
                 &engine, &QQmlApplicationEngine::objectCreated, &app,
@@ -47,6 +60,7 @@ int main(int argc, char *argv[])
     if (engine.rootObjects().isEmpty()) {
         return -1;
     }
+    //dataSource->onSearchButtonPressed("London");
 
     return app.exec();
 }

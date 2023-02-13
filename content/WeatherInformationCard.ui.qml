@@ -4,142 +4,243 @@ import QtQuick3D 6.4
 import Meteo2
 import QtQuick.Layouts 6.3
 
-Item {
-    id: weatherInformationFlickable
+Flickable {
+    id: flickable
     width: 768
-    height: 1024
-
-    Item {
-        id: __materialLibrary__
-    }
+    height: 1080
+    boundsBehavior: Flickable.StopAtBounds
+    pixelAligned: true
+    flickableDirection: Flickable.VerticalFlick
+    contentHeight: columnLayout.childrenRect.height
+    clip: true
 
     Rectangle {
         id: background
-        color: "#ffffff"
+        color: "#00ffffff"
         anchors.fill: parent
     }
 
-    Flickable {
-        id: flickable
+    ColumnLayout {
+        id: columnLayout
         anchors.fill: parent
-        pixelAligned: true
-        flickableDirection: Flickable.VerticalFlick
-        contentHeight: columnLayout.childrenRect.height
-        clip: true
 
-        ColumnLayout {
-            id: columnLayout
-            anchors.fill: parent
 
-            Rectangle {
-                id: rectangle
-                width: 200
-                height: 200
-                color: "#ff0000"
-                Layout.minimumHeight: 512
-                Layout.minimumWidth: 250
-                Layout.fillHeight: true
-                Layout.fillWidth: true
-            }
-
-            Rectangle {
-                id: rectangle1
-                width: 200
-                height: 200
-                color: "#1000ff"
-                Layout.minimumHeight: 250
-                Layout.minimumWidth: 250
-                Layout.fillHeight: true
-                Layout.fillWidth: true
-            }
-
-            Rectangle {
-                id: rectangle2
-                width: 200
-                height: 200
-                color: "#02ff00"
-                Layout.minimumHeight: 250
-                Layout.minimumWidth: 250
-                Layout.fillHeight: true
-                Layout.fillWidth: true
-            }
-
-            Rectangle {
-                id: rectangle3
-                width: 200
-                height: 200
-                color: "#d8ff00"
-                Layout.minimumHeight: 250
-                Layout.minimumWidth: 250
-                Layout.fillHeight: true
-                Layout.fillWidth: true
-            }
-
-            Rectangle {
-                id: rectangle4
-                width: 200
-                height: 200
-                color: "#ffffff"
-                Layout.minimumHeight: 250
-                Layout.minimumWidth: 250
-                Layout.fillHeight: true
-                Layout.fillWidth: true
-            }
-
-            Rectangle {
-                id: rectangle5
-                width: 200
-                height: 200
-                color: "#ff0000"
-                Layout.minimumHeight: 250
-                Layout.minimumWidth: 250
-                Layout.fillHeight: true
-                Layout.fillWidth: true
-            }
-
-            Rectangle {
-                id: rectangle6
-                width: 200
-                height: 200
-                color: "#1000ff"
-                Layout.minimumHeight: 250
-                Layout.minimumWidth: 250
-                Layout.fillHeight: true
-                Layout.fillWidth: true
-            }
-
-            Rectangle {
-                id: rectangle7
-                width: 200
-                height: 200
-                color: "#02ff00"
-                Layout.minimumHeight: 250
-                Layout.minimumWidth: 250
-                Layout.fillHeight: true
-                Layout.fillWidth: true
-            }
-
-            Rectangle {
-                id: rectangle8
-                width: 200
-                height: 200
-                color: "#d8ff00"
-                Layout.minimumHeight: 250
-                Layout.minimumWidth: 250
-                Layout.fillHeight: true
-                Layout.fillWidth: true
-            }
-
-            Rectangle {
-                id: rectangle9
-                width: 200
-                height: 200
-                color: "#f900ff"
-                Layout.minimumHeight: 512
-                Layout.minimumWidth: 250
-                Layout.fillHeight: true
-                Layout.fillWidth: true
-            }
+        SearchField {
+            id: searchField
+            Layout.minimumHeight: 128
+            Layout.fillHeight: true
+            Layout.fillWidth: true
         }
+
+        Countries {
+            id: countries
+            Layout.fillWidth: true
+        }
+
+
+
+
+        Separator {
+            id: separator
+        }
+
+
+
+
+        WeatherDetailsCard {
+            id: weatherDetails
+            cardTitle: "Weather Details"
+            Layout.minimumHeight: 512
+            Layout.preferredHeight: 512
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+        }
+
+
+
+
+
+        Separator {
+            id: separator1
+        }
+
+        Label {
+            id: dailyLabel
+            color: "#ffffff"
+            text: qsTr("Daily Weather")
+            font.pixelSize: 32
+            Layout.leftMargin: 16
+            Layout.fillWidth: true
+            font.bold: true
+        }
+
+        Separator {
+            id: separator2
+        }
+
+        WeatherDetailsCard {
+            id: weatherDetails1
+            Layout.preferredHeight: 512
+            Layout.fillHeight: true
+            Layout.minimumHeight: 512
+            Layout.fillWidth: true
+            cardTitle: "Weather Details"
+        }
+
+
+        Separator {
+            id: separator3
+        }
+
+        WeatherDetailsCard {
+            id: weatherDetails2
+            Layout.preferredHeight: 512
+            Layout.fillHeight: true
+            Layout.minimumHeight: 512
+            Layout.fillWidth: true
+            cardTitle: "Weather Details"
+        }
+
+
+
+        Separator {
+            id: separator4
+        }
+
+        WeatherDetailsCard {
+            id: weatherDetails3
+            Layout.preferredHeight: 512
+            Layout.fillHeight: true
+            Layout.minimumHeight: 512
+            Layout.fillWidth: true
+            cardTitle: "Weather Details"
+        }
+
+
+
+
+        Separator {
+            id: separator5
+        }
+
+        WeatherDetailsCard {
+            id: weatherDetails4
+            Layout.preferredHeight: 512
+            Layout.fillHeight: true
+            Layout.minimumHeight: 512
+            Layout.fillWidth: true
+            cardTitle: "Weather Details"
+        }
+
+
+
+
+
+        Separator {
+            id: separator6
+        }
+
+        WeatherDetailsCard {
+            id: weatherDetails5
+            Layout.preferredHeight: 512
+            Layout.fillHeight: true
+            Layout.minimumHeight: 512
+            Layout.fillWidth: true
+            cardTitle: "Weather Details"
+        }
+
+
+
+
+
+
+        Separator {
+            id: separator7
+        }
+
+        WeatherDetailsCard {
+            id: weatherDetails6
+            Layout.preferredHeight: 512
+            Layout.fillHeight: true
+            Layout.minimumHeight: 512
+            Layout.fillWidth: true
+            cardTitle: "Weather Details"
+        }
+
+
+
+
+
+
+
+        Separator {
+            id: separator8
+        }
+
+        WeatherDetailsCard {
+            id: weatherDetails7
+            Layout.preferredHeight: 512
+            Layout.fillHeight: true
+            Layout.minimumHeight: 512
+            Layout.fillWidth: true
+            cardTitle: "Weather Details"
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    }
+
+    Item {
+        id: __materialLibrary__
     }
 }
