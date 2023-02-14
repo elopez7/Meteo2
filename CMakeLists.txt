@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.21.1)
+cmake_minimum_required(VERSION 3.23)
 
 set(BUILD_QDS_COMPONENTS ON CACHE BOOL "Build design studio components")
 
@@ -40,6 +40,31 @@ target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE
     Qt${QT_VERSION_MAJOR}::Gui
     Qt${QT_VERSION_MAJOR}::Quick
     Qt${QT_VERSION_MAJOR}::Qml
+)
+
+qt_add_qml_module(meteoModule
+    URI org.esteban.meteoApp
+    AUTO_RESOURCE_PREFIX
+    VERSION 1.0
+    #PLUGIN_TARGET meteoModulePlugin
+    IMPORT_PATH ${QT_QML_OUTPUT_DIRECTORY}
+    QML_FILES
+        main.qml
+    SOURCES
+        src/datasource.h
+        src/datasource.cpp
+        src/locationmodel.h
+        src/locationmodel.cpp
+)
+
+target_include_directories(meteoModule
+    PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/../"
+    PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}"
+)
+
+install(TARGETS meteoModule
+    BUNDLE DESTINATION .
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
 )
 
 if (${BUILD_QDS_COMPONENTS})

@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
     LocationModel locationModel;
     DataSource* dataSource{new DataSource(&engine)};
     locationModel.setDataSource(dataSource);
-
+/*
     qmlRegisterSingletonType<DataSource*>("org.esteban.data", 1, 0, "DataSource", [&](QQmlEngine *, QJSEngine *) -> QObject *{
         return dataSource;
     });
@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
     qmlRegisterSingletonType<LocationModel>("org.esteban.Locations", 1, 0, "LocationModel", [&](QQmlEngine *, QJSEngine *) -> QObject *{
         return &locationModel;
     });
-
+*/
     const QUrl url(u"qrc:Main/main.qml"_qs);
     QObject::connect(
                 &engine, &QQmlApplicationEngine::objectCreated, &app,

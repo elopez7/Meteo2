@@ -8,7 +8,7 @@ Check out https://doc.qt.io/qtcreator/creator-quick-ui-forms.html for details on
 */
 import QtQuick 2.15
 
-//import org.esteban.Locations 1.0
+import org.esteban.meteoApp 1.0
 ListView {
     id: view
     width: 420
@@ -27,6 +27,5 @@ ListView {
     }
 
     delegate: CountriesDelegate {
-        id: myDelegate
     }
 }
