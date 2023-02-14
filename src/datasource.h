@@ -4,14 +4,16 @@
 #include "locationdto.h"
 #include "weatherdto.h"
 
-#include "qqmlregistration.h"
+#include<QQmlEngine>
+//#include <qqmlregistration.h>
 #include <QJsonArray>
 #include <QObject>
 
 class DataSource : public QObject
 {
     Q_OBJECT
-    //QML_NAMED_ELEMENT(WeatherDataSource)
+    QML_NAMED_ELEMENT(DataSource)
+    QML_SINGLETON
 public:
     explicit DataSource(QObject *parent = nullptr);
 

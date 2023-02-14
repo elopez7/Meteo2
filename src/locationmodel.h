@@ -7,6 +7,8 @@
 class LocationModel : public QAbstractListModel
 {
     Q_OBJECT
+    QML_NAMED_ELEMENT(LocationModel)
+    QML_SINGLETON
     Q_PROPERTY(DataSource* dataSource READ getDataSource WRITE setDataSource CONSTANT FINAL)
 public:
     explicit LocationModel(QObject *parent = nullptr);
