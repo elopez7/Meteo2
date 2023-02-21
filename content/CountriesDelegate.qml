@@ -8,7 +8,7 @@ Check out https://doc.qt.io/qtcreator/creator-quick-ui-forms.html for details on
 */
 import QtQuick 2.15
 
-//import org.esteban.Locations 1.0
+import org.esteban.data 1.0
 Item {
     id: delegate
     width: ListView.view.width
@@ -27,7 +27,10 @@ Item {
     MouseArea {
         id: mouseArea
         anchors.fill: parent
-        onClicked: delegate.ListView.view.currentIndex = index
+        onClicked: {
+            delegate.ListView.view.currentIndex = index
+            DataSource.getWeatherInformation(index)
+        }
     }
 
     states: [

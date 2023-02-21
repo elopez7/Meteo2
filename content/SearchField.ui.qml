@@ -38,7 +38,11 @@ RowLayout {
         }
         Connections {
             target: button
-            onClicked: DataSource.onSearchButtonPressed(myTextInput.userInput)
+            onClicked: {
+                DataSource.onSearchButtonPressed(myTextInput.userInput)
+                currentWeatherCard.currentLocation = myTextInput.userInput
+            }
+
         }
     }
 

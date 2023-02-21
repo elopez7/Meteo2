@@ -16,7 +16,7 @@ qt6_add_qml_module(content
         CustomTextInput.ui.qml
         CurrentWeatherCard.ui.qml
         CountriesModel.qml
-        CountriesDelegate.ui.qml
+        CountriesDelegate.qml
         Countries.ui.qml
         App.qml
     RESOURCES

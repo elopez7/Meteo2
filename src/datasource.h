@@ -11,7 +11,9 @@
 class DataSource : public QObject
 {
     Q_OBJECT
-    //QML_NAMED_ELEMENT(WeatherDataSource)
+    Q_PROPERTY(double currentTemperature READ getCurrentTemperature WRITE setCurrentTemperature NOTIFY currentTemperatureChanged)
+    Q_PROPERTY(QString currentTime READ getCurrentTime WRITE setCurrentTime NOTIFY currentTimeChanged)
+    Q_PROPERTY(QString description READ setDescription WRITE setDescription NOTIFY descriptionChanged)
 public:
     explicit DataSource(QObject *parent = nullptr);
 
@@ -21,11 +23,26 @@ public:
     QList<LocationDTO* > getLocationsList();
     void appendLocationToList(LocationDTO* locationToAdd);
 
+    double getCurrentTemperature() const;
+    void setCurrentTemperature(double newCurrentTemperature);
+
+    QString getCurrentTime() const;
+    void setCurrentTime(const QString &newCurrentTime);
+
+    QString setDescription() const;
+    void setDescription(const QString &newDescription);
+
 signals:
     void preAddLocationToModel();
     void postAddLocationToModel();
     void preResetModel();
     void postResetModel();
+
+    void currentTemperatureChanged();
+
+    void currentTimeChanged();
+
+    void descriptionChanged();
 
 private slots:
     void onDataFetchFinished(QJsonDocument weatherObject);
@@ -39,6 +56,9 @@ private:
 
     void getLocationInformation(const QString& location);
     void moveLocationsFromJsonArrayToLocationsList(QJsonArray locationsArray);
+    double m_currentTemperature{0.0};
+    QString m_currentTime;
+    QString m_description;
 };
 
 #endif // DATASOURCE_H

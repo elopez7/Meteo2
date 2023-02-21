@@ -1,10 +1,12 @@
 #include "datasource.h"
 #include <QDebug>
+#include <QDateTime>
 
 DataSource::DataSource(QObject *parent)
     : QObject{parent}
 {
     connect(&m_apiClient, &APIClient::onDataFetchFinished, this, &DataSource::onDataFetchFinished);
+    setCurrentTime(QDateTime::currentDateTime().toString("hh:mm AP-dddd, dd-MMM-yyyy"));
 }
 
 void DataSource::getWeatherInformation(const int selection)
@@ -65,10 +67,57 @@ void DataSource::onDataFetchFinished(QJsonDocument fetchedObject)
     {
 
         QJsonObject currentWeatherJsonObject = fetchedObject["current"].toObject();
-        qDebug() << currentWeatherJsonObject;
+
+        setCurrentTemperature(currentWeatherJsonObject["temp"].toDouble());
+
+        double timeStamp{currentWeatherJsonObject["dt"].toDouble()};
+        QDateTime forecastTime{};
+        forecastTime.setSecsSinceEpoch(timeStamp);
+        setCurrentTime(forecastTime.toString("hh:mm AP-dddd, dd-MMM-yyyy"));
+
+
         return;
     }
 
     QJsonArray locationsArray = fetchedObject.array();
     moveLocationsFromJsonArrayToLocationsList(locationsArray);
+}
+
+double DataSource::getCurrentTemperature() const
+{
+    return m_currentTemperature;
+}
+
+void DataSource::setCurrentTemperature(double newCurrentTemperature)
+{
+    if (qFuzzyCompare(m_currentTemperature, newCurrentTemperature))
+        return;
+    m_currentTemperature = newCurrentTemperature;
+    emit currentTemperatureChanged();
+}
+
+QString DataSource::getCurrentTime() const
+{
+    return m_currentTime;
+}
+
+void DataSource::setCurrentTime(const QString &newCurrentTime)
+{
+    if (m_currentTime == newCurrentTime)
+        return;
+    m_currentTime = newCurrentTime;
+    emit currentTimeChanged();
+}
+
+QString DataSource::setDescription() const
+{
+    return m_description;
+}
+
+void DataSource::setDescription(const QString &newDescription)
+{
+    if (m_description == newDescription)
+        return;
+    m_description = newDescription;
+    emit descriptionChanged();
 }

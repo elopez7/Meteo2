@@ -4,11 +4,13 @@ import QtQuick3D 6.4
 import Meteo2
 import QtQuick.Layouts 6.3
 import Quick3DAssets.PipeHouse 1.0
+import org.esteban.data 1.0
 
 Item {
     id: currentWeatherCard
     width: 768
     height: 256
+    property string currentLocation: "value"
 
     RowLayout {
         id: rowLayout
@@ -19,7 +21,7 @@ Item {
             width: 102
             height: 107
             color: "#ffffff"
-            text: qsTr("16°")
+            text: qsTr(DataSource.currentTemperature.toFixed(1)+"°")
             font.pixelSize: 168
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
@@ -44,7 +46,7 @@ Item {
                 width: 102
                 height: 107
                 color: "#ffffff"
-                text: qsTr("London")
+                text: qsTr(currentLocation)
                 font.pixelSize: 64
                 verticalAlignment: Text.AlignBottom
                 Layout.maximumWidth: 256
@@ -60,7 +62,7 @@ Item {
                 width: 102
                 height: 107
                 color: "#ffffff"
-                text: qsTr("4:14-Sunday,5 Feb 2023 ")
+                text: qsTr(DataSource.currentTime)
                 font.pixelSize: 32
                 fontSizeMode: Text.Fit
                 Layout.maximumWidth: 256
