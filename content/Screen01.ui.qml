@@ -12,6 +12,7 @@ import QtQuick3D 6.4
 import Meteo2
 import QtQuick.Layouts 6.3
 import Quick3DAssets.PipeHouse 1.0
+import QtQuick3D.Particles3D 6.4
 
 Rectangle {
     id: rectangle
@@ -47,6 +48,9 @@ Rectangle {
             PipeHouse {
                 id: pipeHouse
                 x: 0
+                scale.z: 10
+                scale.y: 10
+                scale.x: 10
                 eulerRotation.z: 0
                 eulerRotation.y: 37.54223
                 eulerRotation.x: -0
@@ -55,14 +59,73 @@ Rectangle {
 
             OrthographicCamera {
                 id: cameraOrthographic
-                x: 9.543
-                y: 15.462
+                x: 84.085
+                y: 160.592
                 eulerRotation.z: -0
                 eulerRotation.y: 0
                 eulerRotation.x: -25.15905
-                verticalMagnification: 50
-                horizontalMagnification: 50
-                z: 20.61482
+                verticalMagnification: 5
+                horizontalMagnification: 5
+                z: 182.38942
+            }
+
+            ParticleSystem3D {
+                id: snow
+                x: 0
+                y: 0
+                visible: true
+                ParticleEmitter3D {
+                    id: snowEmitter
+                    particleScaleVariation: 1
+                    emitRate: 500
+                    lifeSpan: 4000
+                    velocity: snowDirection
+                    shape: snowShape
+                    particleScale: 2
+                    VectorDirection3D {
+                        id: snowDirection
+                        direction.z: 0
+                        direction.y: -100
+                    }
+
+                    SpriteParticle3D {
+                        id: snowParticle
+                        color: "#dcdcdc"
+                        billboard: true
+                        maxAmount: 5000
+                        particleScale: 1
+                        sprite: snowTexture
+                        Texture {
+                            id: snowTexture
+                            source: "snowflake.png"
+                        }
+                    }
+                    particle: snowParticle
+                }
+
+                ParticleShape3D {
+                    id: snowShape
+                    type: ParticleShape3D.Cube
+                    extents.y: 1
+                    extents.z: 400
+                    extents.x: 400
+                    fill: true
+                }
+
+                Wander3D {
+                    id: wander
+                    uniqueAmount.x: 50
+                    uniquePace.z: 0.03
+                    uniqueAmount.y: 20
+                    uniqueAmountVariation: 0.1
+                    uniqueAmount.z: 50
+                    globalPace.x: 0.01
+                    globalAmount.x: -500
+                    uniquePaceVariation: 0.2
+                    uniquePace.y: 0.01
+                    uniquePace.x: 0.03
+                    particles: snowParticle
+                }
             }
         }
     }
@@ -105,5 +168,4 @@ Rectangle {
         font.pixelSize: 128
         verticalAlignment: Text.AlignVCenter
     }
-
 }

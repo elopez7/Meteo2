@@ -20,6 +20,12 @@ qt6_add_qml_module(content
         Countries.ui.qml
         App.qml
     RESOURCES
+        splash7.png
+        sphere.png
+        snowflake.png
+        smoke2.png
+        ripple.png
+        rain.png
         images/searchIcon.svg
         images/cloud.svg
 

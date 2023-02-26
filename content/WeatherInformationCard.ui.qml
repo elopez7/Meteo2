@@ -3,6 +3,7 @@ import QtQuick.Controls 6.4
 import QtQuick3D 6.4
 import Meteo2
 import QtQuick.Layouts 6.3
+import org.esteban.data 1.0
 
 Flickable {
     id: flickable
@@ -50,6 +51,10 @@ Flickable {
         WeatherDetailsCard {
             id: weatherDetails
             cardTitle: "Weather Details"
+            feelsLikeVal: DataSource.feelsLike
+            humidityPercentageVal: DataSource.humidity
+            windSpeedVal: DataSource.wind
+            cloudPercentageVal: DataSource.clouds
             Layout.minimumHeight: 512
             Layout.preferredHeight: 512
             Layout.fillHeight: true

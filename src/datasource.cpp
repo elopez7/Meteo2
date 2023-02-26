@@ -33,6 +33,51 @@ void DataSource::getLocationInformation(const QString& location)
     m_apiClient.onGetLocations(location);
 }
 
+void DataSource::onDataFetchFinished(QJsonDocument fetchedObject)
+{
+    if(!m_isRequestingLocation)
+    {
+        setCurrentWeatherData(fetchedObject);
+        return;
+    }
+
+    QJsonArray locationsArray = fetchedObject.array();
+    moveLocationsFromJsonArrayToLocationsList(locationsArray);
+}
+
+void DataSource::setCurrentWeatherData(QJsonDocument fetchedObject)
+{
+    QJsonObject currentWeatherJsonObject = fetchedObject["current"].toObject();
+
+    setWeatherDescription(currentWeatherJsonObject);
+    setCurrentTemperature(currentWeatherJsonObject["temp"].toDouble());
+    setTimeOfForecast(currentWeatherJsonObject);
+    setWeatherDetails(currentWeatherJsonObject);
+}
+
+void DataSource::setWeatherDescription(QJsonObject currentWeatherJsonObject)
+{
+    QJsonArray weatherDescriptionArray = currentWeatherJsonObject["weather"].toArray();
+    QJsonObject weatherDescriptionObject{weatherDescriptionArray[0].toObject()};
+    setDescription(weatherDescriptionObject["main"].toString());
+}
+
+void DataSource::setTimeOfForecast(QJsonObject currentWeatherJsonObject)
+{
+    double timeStamp{currentWeatherJsonObject["dt"].toDouble()};
+    QDateTime forecastTime{};
+    forecastTime.setSecsSinceEpoch(timeStamp);
+    setCurrentTime(forecastTime.toString("hh:mm AP-dddd, dd-MMM-yyyy"));
+}
+
+void DataSource::setWeatherDetails(QJsonObject currentWeatherJsonObject)
+{
+    setFeelsLike(currentWeatherJsonObject["feels_like"].toDouble());
+    setHumidity(currentWeatherJsonObject["humidity"].toDouble());
+    setWind(currentWeatherJsonObject["wind_speed"].toDouble());
+    setClouds(currentWeatherJsonObject["clouds"].toDouble());
+}
+
 void DataSource::moveLocationsFromJsonArrayToLocationsList(QJsonArray locationsArray)
 {
     for(auto i : locationsArray)
@@ -59,28 +104,6 @@ void DataSource::appendLocationToList(LocationDTO *locationToAdd)
 QList<LocationDTO *> DataSource::getLocationsList()
 {
     return m_locationsList;
-}
-
-void DataSource::onDataFetchFinished(QJsonDocument fetchedObject)
-{
-    if(!m_isRequestingLocation)
-    {
-
-        QJsonObject currentWeatherJsonObject = fetchedObject["current"].toObject();
-
-        setCurrentTemperature(currentWeatherJsonObject["temp"].toDouble());
-
-        double timeStamp{currentWeatherJsonObject["dt"].toDouble()};
-        QDateTime forecastTime{};
-        forecastTime.setSecsSinceEpoch(timeStamp);
-        setCurrentTime(forecastTime.toString("hh:mm AP-dddd, dd-MMM-yyyy"));
-
-
-        return;
-    }
-
-    QJsonArray locationsArray = fetchedObject.array();
-    moveLocationsFromJsonArrayToLocationsList(locationsArray);
 }
 
 double DataSource::getCurrentTemperature() const
@@ -120,4 +143,56 @@ void DataSource::setDescription(const QString &newDescription)
         return;
     m_description = newDescription;
     emit descriptionChanged();
+}
+
+double DataSource::getFeelsLike() const
+{
+    return m_feelsLike;
+}
+
+void DataSource::setFeelsLike(double newFeelsLike)
+{
+    if (qFuzzyCompare(m_feelsLike, newFeelsLike))
+        return;
+    m_feelsLike = newFeelsLike;
+    emit feelsLikeChanged();
+}
+
+double DataSource::getHumidity() const
+{
+    return m_humidity;
+}
+
+void DataSource::setHumidity(double newHumidity)
+{
+    if (qFuzzyCompare(m_humidity, newHumidity))
+        return;
+    m_humidity = newHumidity;
+    emit humidityChanged();
+}
+
+double DataSource::getWind() const
+{
+    return m_wind;
+}
+
+void DataSource::setWind(double newWind)
+{
+    if (qFuzzyCompare(m_wind, newWind))
+        return;
+    m_wind = newWind;
+    emit windChanged();
+}
+
+double DataSource::getClouds() const
+{
+    return m_clouds;
+}
+
+void DataSource::setClouds(double newClouds)
+{
+    if (qFuzzyCompare(m_clouds, newClouds))
+        return;
+    m_clouds = newClouds;
+    emit cloudsChanged();
 }

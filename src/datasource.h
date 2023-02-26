@@ -14,6 +14,11 @@ class DataSource : public QObject
     Q_PROPERTY(double currentTemperature READ getCurrentTemperature WRITE setCurrentTemperature NOTIFY currentTemperatureChanged)
     Q_PROPERTY(QString currentTime READ getCurrentTime WRITE setCurrentTime NOTIFY currentTimeChanged)
     Q_PROPERTY(QString description READ setDescription WRITE setDescription NOTIFY descriptionChanged)
+
+    Q_PROPERTY(double feelsLike READ getFeelsLike WRITE setFeelsLike NOTIFY feelsLikeChanged)
+    Q_PROPERTY(double humidity READ getHumidity WRITE setHumidity NOTIFY humidityChanged)
+    Q_PROPERTY(double wind READ getWind WRITE setWind NOTIFY windChanged)
+    Q_PROPERTY(double clouds READ getClouds WRITE setClouds NOTIFY cloudsChanged)
 public:
     explicit DataSource(QObject *parent = nullptr);
 
@@ -32,6 +37,18 @@ public:
     QString setDescription() const;
     void setDescription(const QString &newDescription);
 
+    double getFeelsLike() const;
+    void setFeelsLike(double newFeelsLike);
+
+    double getHumidity() const;
+    void setHumidity(double newHumidity);
+
+    double getWind() const;
+    void setWind(double newWind);
+
+    double getClouds() const;
+    void setClouds(double newClouds);
+
 signals:
     void preAddLocationToModel();
     void postAddLocationToModel();
@@ -44,6 +61,14 @@ signals:
 
     void descriptionChanged();
 
+    void feelsLikeChanged();
+
+    void humidityChanged();
+
+    void windChanged();
+
+    void cloudsChanged();
+
 private slots:
     void onDataFetchFinished(QJsonDocument weatherObject);
 
@@ -53,12 +78,20 @@ private:
     QList<LocationDTO* > m_locationsList;
     QList<DailyWeatherDTO*> m_dailyWeatherList;
     bool m_isRequestingLocation;
-
-    void getLocationInformation(const QString& location);
-    void moveLocationsFromJsonArrayToLocationsList(QJsonArray locationsArray);
     double m_currentTemperature{0.0};
     QString m_currentTime;
     QString m_description;
+    double m_feelsLike;
+    double m_humidity;
+    double m_wind;
+    double m_clouds;
+
+    void getLocationInformation(const QString& location);
+    void moveLocationsFromJsonArrayToLocationsList(QJsonArray locationsArray);
+    void setCurrentWeatherData(QJsonDocument fetchedObject);
+    void setWeatherDescription(QJsonObject currentWeatherJsonObject);
+    void setTimeOfForecast(QJsonObject currentWeatherJsonObject);
+    void setWeatherDetails(QJsonObject currentWeatherJsonObject);
 };
 
 #endif // DATASOURCE_H

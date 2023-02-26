@@ -1,5 +1,6 @@
 import QtQuick
 import QtQuick3D
+import Quick3DAssets.PipeHouse 1.0
 
 Node {
     // Materials

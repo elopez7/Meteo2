@@ -96,7 +96,7 @@ Item {
             Text {
                 id: text4
                 color: "#ffffff"
-                text: qsTr("Cloudy")
+                text: qsTr(DataSource.description)
                 font.pixelSize: 32
                 horizontalAlignment: Text.AlignHCenter
                 fontSizeMode: Text.Fit

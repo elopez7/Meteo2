@@ -83,7 +83,7 @@
             "description": "Global Scale factor.",
             "name": "Global Scale Value",
             "type": "Real",
-            "value": 1
+            "value": 10
         },
         "improveCacheLocality": {
             "description": "Reorders triangles for better vertex cache locality.",
